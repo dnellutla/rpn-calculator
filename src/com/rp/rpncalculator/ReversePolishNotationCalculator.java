@@ -8,6 +8,13 @@ import java.util.Arrays;
 import java.util.Stack;
 import java.util.function.BiFunction;
 
+/**
+ * This class performs arithmetic operations on RPN format numbers
+ * 
+ * 
+ *
+ */
+
 public class ReversePolishNotationCalculator implements Runnable {
 
     static int quit = 0;
@@ -32,7 +39,12 @@ public class ReversePolishNotationCalculator implements Runnable {
 
     }
 
-    public static void calc(String input) {
+    /**
+     * This method Push the numbers to the stack if not performs the calculation
+     * 
+     * @param input
+     */
+    private static void calc(String input) {
         Arrays.asList(input.split(" ")).stream().forEach(number -> {
             switch (input) {
             case "+":
@@ -57,13 +69,19 @@ public class ReversePolishNotationCalculator implements Runnable {
                 } else {
                     System.out.println(
                             "You have entered an invalid string, please enter any number or any arithmetic operator such as +,-,*,/, No other operators/strings are allowed");
-                    System.out.println("find:" + numbers.isEmpty());
                 }
             }
         });
 
     }
 
+    /**
+     * Does the actual calculation
+     * 
+     * @param numbers
+     * @param operation
+     * @return
+     */
     protected static Stack<BigDecimal> calculate(Stack<BigDecimal> numbers, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
         try {
             BigDecimal result = operation.apply(numbers.pop(), numbers.pop());
@@ -78,6 +96,9 @@ public class ReversePolishNotationCalculator implements Runnable {
 
     }
 
+    /**
+     * 
+     */
     @Override
     public void run() {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
