@@ -22,6 +22,16 @@ Addition is performed on 1,2 which gives output as 3
 The out put 3 is subtracted from 5 gives -2
 And then -2 multipled by 5 gives 10.
 
+Technology Stack Used
+
+Java 1.8
+
+
+To arrive at a solution I have used Stack datastructure for the arithmetic operations, if it is a number push to the stack, if it is a arithmetic operator then perform the operation according to the symbol and output the result.
+
+Extension of this solution: Options I think are to develop a mathematical calculator and give user choices which one to use i.e Regular vs RPN.
+Develop a webpage parallel to the UNIX CLI type.
+
 To run the application 
 
 do a maven package, mvn clean package
