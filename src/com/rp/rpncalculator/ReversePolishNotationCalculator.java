@@ -63,6 +63,10 @@ public class ReversePolishNotationCalculator implements Runnable {
                 break;
             case "/":
                 System.out.println("doing division");
+                if (numbers.peek() == BigDecimal.ZERO) {
+                    numbers.pop();
+                    System.out.println(" Number cannot be divided by zero, Continue by entering other than number zero");
+                }
                 calculate(numbers, (n1, n2) -> n2.divide(n1));
                 break;
             default:
@@ -70,12 +74,16 @@ public class ReversePolishNotationCalculator implements Runnable {
                 Matcher regexMatcher = regex.matcher(input);
                 if (regexMatcher.find()) {
                     numbers.push(new BigDecimal(input));
+                } else if ("q".equalsIgnoreCase(input)) {
+
+                    System.out.println(" Exit from the calculator");
                 } else {
                     System.out.println(
+
                             "You have entered an invalid string, please enter any number or any arithmetic operator such as +,-,*,/, No other operators/strings are allowed");
                 }
-                // \\d+ \"-?(?:\\\\d+(?:\\\\.\\\\d+)?|\\\\.\\\\d+)\"
             }
+
         });
 
     }
@@ -89,6 +97,7 @@ public class ReversePolishNotationCalculator implements Runnable {
      */
     protected static Stack<BigDecimal> calculate(Stack<BigDecimal> numbers, BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
         try {
+
             BigDecimal result = operation.apply(numbers.pop(), numbers.pop());
             System.out.println("result:" + result);
             numbers.push(result);
