@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Stack;
 import java.util.function.BiFunction;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class performs arithmetic operations on RPN format numbers
@@ -64,12 +66,15 @@ public class ReversePolishNotationCalculator implements Runnable {
                 calculate(numbers, (n1, n2) -> n2.divide(n1));
                 break;
             default:
-                if (input.matches("\\d+")) {
+                Pattern regex = Pattern.compile("-?(?:\\d+(?:\\.\\d+)?|\\.\\d+)");
+                Matcher regexMatcher = regex.matcher(input);
+                if (regexMatcher.find()) {
                     numbers.push(new BigDecimal(input));
                 } else {
                     System.out.println(
                             "You have entered an invalid string, please enter any number or any arithmetic operator such as +,-,*,/, No other operators/strings are allowed");
                 }
+                // \\d+ \"-?(?:\\\\d+(?:\\\\.\\\\d+)?|\\\\.\\\\d+)\"
             }
         });
 
