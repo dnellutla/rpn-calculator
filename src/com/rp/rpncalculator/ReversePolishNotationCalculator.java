@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Stack;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
@@ -47,44 +46,41 @@ public class ReversePolishNotationCalculator implements Runnable {
      * @param input
      */
     private static void calc(String input) {
-        Arrays.asList(input.split(" ")).stream().forEach(number -> {
-            switch (input) {
-            case "+":
-                System.out.println("doing addition");
-                calculate(numbers, (n1, n2) -> n2.add(n1));
-                break;
-            case "-":
-                System.out.println("doing subtraction");
-                calculate(numbers, (n1, n2) -> n2.subtract(n1));
-                break;
-            case "*":
-                System.out.println("doing multiplication");
-                calculate(numbers, (n1, n2) -> n2.multiply(n1));
-                break;
-            case "/":
-                System.out.println("doing division");
-                if (numbers.peek() == BigDecimal.ZERO) {
-                    numbers.pop();
-                    System.out.println(" Number cannot be divided by zero, Continue by entering other than number zero");
-                }
-                calculate(numbers, (n1, n2) -> n2.divide(n1));
-                break;
-            default:
-                Pattern regex = Pattern.compile("-?(?:\\d+(?:\\.\\d+)?|\\.\\d+)");
-                Matcher regexMatcher = regex.matcher(input);
-                if (regexMatcher.find()) {
-                    numbers.push(new BigDecimal(input));
-                } else if ("q".equalsIgnoreCase(input)) {
-
-                    System.out.println(" Exit from the calculator");
-                } else {
-                    System.out.println(
-
-                            "You have entered an invalid string, please enter any number or any arithmetic operator such as +,-,*,/, No other operators/strings are allowed");
-                }
+        switch (input) {
+        case "+":
+            System.out.println("doing addition");
+            calculate(numbers, (n1, n2) -> n2.add(n1));
+            break;
+        case "-":
+            System.out.println("doing subtraction");
+            calculate(numbers, (n1, n2) -> n2.subtract(n1));
+            break;
+        case "*":
+            System.out.println("doing multiplication");
+            calculate(numbers, (n1, n2) -> n2.multiply(n1));
+            break;
+        case "/":
+            System.out.println("doing division");
+            if (numbers.peek() == BigDecimal.ZERO) {
+                numbers.pop();
+                System.out.println(" Number cannot be divided by zero, Continue by entering other than number zero");
             }
+            calculate(numbers, (n1, n2) -> n2.divide(n1));
+            break;
+        case "Q":
+            System.out.println("Exit from the application, Thank you");
+            break;
+        default:
+            Pattern regex = Pattern.compile("-?(?:\\d+(?:\\.\\d+)?|\\.\\d+)");
+            Matcher regexMatcher = regex.matcher(input);
+            if (regexMatcher.find()) {
+                numbers.push(new BigDecimal(input));
+            } else {
+                System.out.println(
 
-        });
+                        "You have entered an invalid string, please enter any number or any arithmetic operator such as +,-,*,/, No other operators/strings are allowed");
+            }
+        }
 
     }
 
